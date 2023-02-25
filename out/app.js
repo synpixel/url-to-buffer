@@ -17,23 +17,58 @@ const puppeteer_1 = __importDefault(require("puppeteer"));
 const server = (0, fastify_1.default)({
     logger: true
 });
-server.post('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('POST /');
-    const browser = yield puppeteer_1.default.launch();
-    const page = yield browser.newPage();
-    console.log('Created page and browser');
-    const body = request.body;
-    yield page.goto(body.url);
-    yield page.setViewport({ width: 1920, height: 1080 });
-    console.log('Configured page');
-    const buffer = yield page.screenshot();
-    console.log('Generated screenshot');
-    reply.send(buffer);
-    console.log('Sent screenshot to client');
-    yield browser.close();
-    console.log('Closed browser.');
-    return reply;
-}));
+/*
+server.post('/', async (request, reply) => {
+  console.log('POST /');
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  console.log('Created page and browser');
+
+  const body: Body = request.body;
+
+  await page.goto(body.url);
+  await page.setViewport({ width: 1920, height: 1080 });
+
+  console.log('Configured page');
+
+  const buffer: Buffer = await page.screenshot();
+
+  console.log('Generated screenshot');
+  
+  reply.send(buffer);
+
+  console.log('Sent screenshot to client');
+
+  await browser.close();
+
+  console.log('Closed browser');
+
+  return reply;
+});
+*/
+server.route({
+    method: 'POST',
+    url: '/',
+    handler: (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log('POST /');
+        const browser = yield puppeteer_1.default.launch();
+        const page = yield browser.newPage();
+        console.log('Created page and browser');
+        const body = request.body;
+        yield page.goto(body.url);
+        yield page.setViewport({ width: 1920, height: 1080 });
+        console.log('Configured page');
+        const buffer = yield page.screenshot();
+        console.log('Generated screenshot');
+        reply.send(buffer);
+        console.log('Sent screenshot to client');
+        yield browser.close();
+        console.log('Closed browser');
+        return reply;
+    })
+});
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
