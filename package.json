@@ -23,7 +23,8 @@
     "fastify": "^4.0.0",
     "fastify-cli": "^5.7.1",
     "fastify-plugin": "^4.0.0",
-    "puppeteer": "^19.7.2"
+    "puppeteer": "^19.7.2",
+    "wait": "^0.4.2"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",
