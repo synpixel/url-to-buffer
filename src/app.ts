@@ -7,7 +7,6 @@ const server = fastify({
   logger: true
 });
 
-/*
 server.post('/', async (request, reply) => {
   console.log('POST /');
 
@@ -37,8 +36,8 @@ server.post('/', async (request, reply) => {
 
   return reply;
 });
-*/
 
+/*
 server.route({
   method: 'POST',
   url: '/',
@@ -72,6 +71,7 @@ server.route({
     return reply;
   }
 });
+*/
 
 async function start() {
   try {
