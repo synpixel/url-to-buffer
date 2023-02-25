@@ -18,14 +18,20 @@ const server = (0, fastify_1.default)({
     logger: true
 });
 server.post('/', (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('POST /');
     const browser = yield puppeteer_1.default.launch();
     const page = yield browser.newPage();
+    console.log('Created page and browser');
     const body = request.body;
     yield page.goto(body.url);
     yield page.setViewport({ width: 1920, height: 1080 });
+    console.log('Configured page');
     const buffer = yield page.screenshot();
+    console.log('Generated screenshot');
     reply.send(buffer);
+    console.log('Sent screenshot to client');
     yield browser.close();
+    console.log('Closed browser.');
     return reply;
 }));
 function start() {
