@@ -15,13 +15,15 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     await page.goto(body.url);
     await page.setViewport({ width: 1920, height: 1080 });
 
+    /*
     if (body.darkMode) {
       await page.emulateMediaFeatures([
         {name: 'prefers-color-scheme', value: 'dark'},
       ]);
     }
 
-    // await wait(1000);
+    await wait(1000);
+    */
 
     const buffer: Buffer = await page.screenshot();
 
