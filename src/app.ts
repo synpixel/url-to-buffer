@@ -27,7 +27,7 @@ server.post('/', async (request, reply) => {
 
 async function start() {
   try {
-    await server.listen({ host: '0.0.0.0' });
+    await server.listen({ host: '0.0.0.0', port: 3000 });
   } catch(err) {
     server.log.error(err);
     process.exit(1);
