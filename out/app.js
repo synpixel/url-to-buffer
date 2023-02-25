@@ -32,7 +32,7 @@ server.post('/', (request, reply) => __awaiter(void 0, void 0, void 0, function*
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield server.listen({ host: '0.0.0.0', port: 3000 });
+            yield server.listen({ host: '0.0.0.0' });
         }
         catch (err) {
             server.log.error(err);
