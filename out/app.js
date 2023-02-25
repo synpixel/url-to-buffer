@@ -23,9 +23,8 @@ server.post('/', (request, reply) => __awaiter(void 0, void 0, void 0, function*
     const body = request.body;
     yield page.goto(body.url);
     yield page.setViewport({ width: 1920, height: 1080 });
-    yield page.screenshot().then((buffer) => {
-        reply.send(buffer);
-    });
+    const buffer = yield page.screenshot();
+    reply.send(buffer);
     yield browser.close();
     return reply;
 }));
