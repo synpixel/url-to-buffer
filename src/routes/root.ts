@@ -2,7 +2,6 @@ type Body = any;
 
 import { FastifyPluginAsync } from 'fastify';
 import puppeteer from 'puppeteer';
-import wait from 'wait';
 
 const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.post('/', async function (request, reply) {
@@ -22,7 +21,7 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       ]);
     }
 
-    await wait(1000);
+    // await wait(1000);
 
     const buffer: Buffer = await page.screenshot();
 
