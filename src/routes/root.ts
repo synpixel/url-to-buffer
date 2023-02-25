@@ -4,7 +4,7 @@ import { FastifyPluginAsync } from 'fastify';
 import puppeteer from 'puppeteer';
 
 const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  fastify.get('/', async function (request, reply) {
+  fastify.post('/', async function (request, reply) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
