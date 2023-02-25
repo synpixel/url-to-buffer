@@ -1,85 +1,40 @@
-type Body = any
+import { join } from 'path';
+import AutoLoad, {AutoloadPluginOptions} from '@fastify/autoload';
+import { FastifyPluginAsync } from 'fastify';
 
-import fastify from 'fastify';
-import puppeteer from 'puppeteer';
+export type AppOptions = {
+  // Place your custom options for app below here.
+} & Partial<AutoloadPluginOptions>;
 
-const server = fastify({
-  logger: true
-});
 
-server.post('/', async (request, reply) => {
-  console.log('POST /');
-
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-
-  console.log('Created page and browser');
-
-  const body: Body = request.body;
-
-  await page.goto(body.url);
-  await page.setViewport({ width: 1920, height: 1080 });
-
-  console.log('Configured page');
-
-  const buffer: Buffer = await page.screenshot();
-
-  console.log('Generated screenshot');
-  
-  reply.send(buffer);
-
-  console.log('Sent screenshot to client');
-
-  await browser.close();
-
-  console.log('Closed browser');
-
-  return reply;
-});
-
-/*
-server.route({
-  method: 'POST',
-  url: '/',
-  handler: async(request, reply) => {
-    console.log('POST /');
-
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-  
-    console.log('Created page and browser');
-  
-    const body: Body = request.body;
-  
-    await page.goto(body.url);
-    await page.setViewport({ width: 1920, height: 1080 });
-  
-    console.log('Configured page');
-  
-    const buffer: Buffer = await page.screenshot();
-  
-    console.log('Generated screenshot');
-    
-    reply.send(buffer);
-  
-    console.log('Sent screenshot to client');
-  
-    await browser.close();
-  
-    console.log('Closed browser');
-  
-    return reply;
-  }
-});
-*/
-
-async function start() {
-  try {
-    await server.listen({ host: '0.0.0.0', port: 3000 });
-  } catch(err) {
-    server.log.error(err);
-    process.exit(1);
-  }
+// Pass --options via CLI arguments in command to enable these options.
+const options: AppOptions = {
 }
 
-start();
+const app: FastifyPluginAsync<AppOptions> = async (
+    fastify,
+    opts
+): Promise<void> => {
+  // Place here your custom code!
+
+  // Do not touch the following lines
+
+  // This loads all plugins defined in plugins
+  // those should be support plugins that are reused
+  // through your application
+  void fastify.register(AutoLoad, {
+    dir: join(__dirname, 'plugins'),
+    options: opts
+  })
+
+  // This loads all plugins defined in routes
+  // define your routes in one of these
+  void fastify.register(AutoLoad, {
+    dir: join(__dirname, 'routes'),
+    options: opts
+  })
+
+};
+
+export default app;
+export { app, options }
