@@ -13,9 +13,9 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     await page.goto(body.url);
     await page.setViewport({ width: 1920, height: 1080 });
 
-    await page.screenshot().then((buffer: Buffer) => {
-      reply.send(buffer);
-    });
+    const buffer: Buffer = await page.screenshot();
+
+    reply.send(buffer);
 
     await browser.close();
 
